@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=.85">
-    <title>Simple Store</title>
+    <title>Luto ni Fred - Ecommerce</title>
     <style>
     @import url("https://fonts.googleapis.com/css?family=Kanit:400");
         *{
@@ -385,6 +385,7 @@
             animation-name: fade;
             animation-direction: ease-in;
             animation-duration: .75s;
+            padding: 14px;
         }
         #closeCart{
             display: grid;
@@ -403,16 +404,16 @@
             width: 95%;
         }
         footer{
-            padding: 32px;
-            background: #C88EA7;
-            margin-top: 24px;
-            border-top: 4px solid #99627A;
+            padding: 24px;
+            box-shadow: 1px 1px 3px 1px silver;
+            margin-top: 48px;
         }
         .about{
             border: 2px solid #99627A;
             border-radius: 5px;
             padding: 14px;
             margin-bottom: 24px;
+            background: #C88EA7;
         }
         .about h2{
             text-decoration: underline;
@@ -429,6 +430,7 @@
         }
         .contact{
             border: 2px solid #99627A;
+            background: #C88EA7;
             border-radius: 5px;
             padding: 14px;
         }
@@ -673,12 +675,13 @@
         // Initialize Firebase
         const firebaseConfig = {
             // Your Firebase configuration
-            apiKey: "AIzaSyAKdN_nMo71p-3Ik2oZPdaRhgYJhcvy5sM",
+          apiKey: "AIzaSyAKdN_nMo71p-3Ik2oZPdaRhgYJhcvy5sM",
           authDomain: "luto-ni-fred.firebaseapp.com",
           projectId: "luto-ni-fred",
           storageBucket: "luto-ni-fred.appspot.com",
           messagingSenderId: "170332137811",
           appId: "1:170332137811:web:35901663b3c28eb2c2d9a6"
+
         };
         firebase.initializeApp(firebaseConfig);
         let cart = [];
@@ -1095,6 +1098,7 @@
                     <img src="${item.product.image}" alt="${item.product.name}">
                     </div>
                     <h3 style='padding-bottom:14px;'>${item.product.name}</h3>
+                    <p>Price: ₱${item.product.price}</p>
                     <div class="quantity">
                     <button class="decrement-btn">-</button>
                     <span>${item.quantity}</span>
@@ -1134,7 +1138,7 @@
                     subtotal += item.product.price * item.quantity; // Calculate subtotal
                 });
 
-                cartSubtotal.innerHTML = `<span class="subtotal">Total Order Price: $${subtotal.toFixed(2)} </span>`; // Update subtotal element
+                cartSubtotal.innerHTML = `<span class="subtotal">Total Order Price: ₱${subtotal.toFixed(2)} </span>`; // Update subtotal element
             }
 
 
@@ -1143,32 +1147,32 @@
 
                 name: "Topsilog",
                 image: "images/almusal/topsilog.jpg",
-                price: 10.99
+                price: 75.00
                 },
                 {
                     name: "Sulidong Almusal",
                     image: "images/almusal/sulidong_almusal.jpg",
-                    price: 19.99
+                    price: 99.00
                 },
                 {
                     name: "Bonsilog",
                     image: "images/almusal/bonsilog.jpg",
-                    price: 7.5
+                    price: 75.00
                 },
                 {
                     name: "Hotsilog",
                     image: "images/almusal/hotsilog.jpg",
-                    price: 7.5
+                    price: 65.00
                 },
                 {
                     name: "Tosilog",
                     image: "images/almusal/tosilog.jpg",
-                    price: 7.5
+                    price: 65.00
                 },
                 {
                     name: "Longsilog",
                     image: "images/almusal/longsilog.jpg",
-                    price: 7.5
+                    price: 65.00
                 }];
 
             // Lutong Ulam Products
@@ -1176,32 +1180,32 @@
 
                 name: "Menudo",
                 image: "images/lutong_ulam/menudo.jpg",
-                price: 7.5
+                price: 75.00
             },
                 {
                     name: "Pakbet",
                     image: "images/lutong_ulam/pakbet.jpg",
-                    price: 7.5
+                    price: 75.00
                 },
                 {
                     name: "Giniling",
                     image: "images/lutong_ulam/giniling.jpg",
-                    price: 7.5
+                    price: 75.00
                 },
                 {
                     name: "Chicken Curry",
                     image: "images/lutong_ulam/chicken_curry.jpg",
-                    price: 7.5
+                    price: 75.00
                 },
                 {
                     name: "Adobo",
                     image: "images/lutong_ulam/adobo.jpg",
-                    price: 7.5
+                    price: 75.00
                 },
                 {
                     name: "Dinakdakan",
                     image: "images/lutong_ulam/dinakdakan.jpg",
-                    price: 7.5
+                    price: 75.00
                 }];
 
             // Panghimagas Products
@@ -1209,32 +1213,32 @@
 
                 name: "Palitaw",
                 image: "images/panghimagas/palitaw.jpg",
-                price: 7.5
+                price: 60.00
             },
                 {
                     name: "Jelly Cake",
                     image: "images/panghimagas/jelly_cake.jpg",
-                    price: 7.5
+                    price: 70.00
                 },
                 {
                     name: "Kutsinta",
                     image: "images/panghimagas/kutsinta.jpg",
-                    price: 7.5
+                    price: 60.00
                 },
                 {
                     name: "Graham",
                     image: "images/panghimagas/graham.jpg",
-                    price: 7.5
+                    price: 85.00
                 },
                 {
                     name: "Halo-Halo",
                     image: "images/panghimagas/special_halo_halo.jpg",
-                    price: 7.5
+                    price: 60.00
                 },
                 {
                     name: "Leche Flan",
                     image: "images/panghimagas/leche_flan.jpg",
-                    price: 7.5
+                    price: 75.00
                 }];
 
             // Render almusal products
@@ -1247,7 +1251,7 @@
                 <img src="${product.image}" alt="${product.name}">
                 </div>
                 <h3>${product.name}</h3>
-                <p>Price: $${product.price}</p>
+                <p>Price: ₱${product.price}</p>
                 <div class="quantity">
                 <button class="decrement-btn">-</button>
                 <span>1</span>
@@ -1302,7 +1306,7 @@
                 <img src="${product.image}" alt="${product.name}">
                 </div>
                 <h3>${product.name}</h3>
-                <p>Price: $${product.price}</p>
+                <p>Price: ₱${product.price}</p>
                 <div class="quantity">
                 <button class="decrement-btn">-</button>
                 <span>1</span>
@@ -1358,7 +1362,7 @@
                 <img src="${product.image}" alt="${product.name}">
                 </div>
                 <h3>${product.name}</h3>
-                <p>Price: $${product.price}</p>
+                <p>Price: ₱${product.price}</p>
                 <div class="quantity">
                 <button class="decrement-btn">-</button>
                 <span>1</span>
@@ -1465,7 +1469,7 @@ function renderMoreProducts() {
                 <img src="${product.image}" alt="${product.name}">
           </div>
           <h3>${product.name}</h3>
-          <p>$${product.price.toFixed(2)}</p>
+          <p>₱${product.price.toFixed(2)}</p>
                 <div class="quantity">
                 <button class="decrement-btn">-</button>
                 <span>1</span>
