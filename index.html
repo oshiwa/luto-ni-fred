@@ -9,6 +9,7 @@
         *{
             font-family: Kanit;
             box-sizing: border-box;
+            scroll-behavior: smooth;
             list-style: none;
             padding: 0;
             margin: 0;
@@ -370,6 +371,21 @@
             animation-direction: ease-in;
             animation-duration: .75s;
         }
+        .iframe-container{
+            position: fixed;
+            transform: translate(-50%, -50%);
+            box-shadow: 1px 1px 3px 1px silver;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100vh;
+            overflow-y: scroll;
+            background: #FFF;
+            display: none;
+            animation-name: fade;
+            animation-direction: ease-in;
+            animation-duration: .75s;
+        }
         #closeCart{
             display: grid;
             padding: 10px;
@@ -385,6 +401,55 @@
             margin-top: 24px;
             margin-bottom: 14px;
             width: 95%;
+        }
+        footer{
+            padding: 32px;
+            background: #C88EA7;
+            margin-top: 24px;
+            border-top: 4px solid #99627A;
+        }
+        .about{
+            border: 2px solid #99627A;
+            border-radius: 5px;
+            padding: 14px;
+            margin-bottom: 24px;
+        }
+        .about h2{
+            text-decoration: underline;
+            text-align: center;
+            padding: 0px 14px 14px 14px;
+        }
+        .about img{
+            display: grid;
+            margin: auto;
+        }
+        .about p{
+            text-align: center;
+            padding: 14px 14px 0px 14px;
+        }
+        .contact{
+            border: 2px solid #99627A;
+            border-radius: 5px;
+            padding: 14px;
+        }
+        .contact h2{
+            text-align: center;
+            padding: 0px 14px 14px 14px;
+            text-decoration: underline;
+        }
+        .contact form{
+            display: grid;
+            gap: 4px;
+        }
+        .contact form input, .contact form textarea, .contact form button{
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+        }
+        footer h3{
+            padding: 14px;
+            text-align: center;
         }
         @media screen and (min-width:720px){
             #orderHistory ul{
@@ -424,9 +489,9 @@
         </div>
         <nav>
             <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Contact Us</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
                 <li><a href="javascript:void(0)" class="showAccount">Account</a></li>
             </ul>
         </nav>
@@ -448,14 +513,23 @@
     </div>
     
     <div class="moreProductsForm">
+        <button style="position:absolute;right:0px;margin:4px" onclick="window.open('https://postimages.org/')">upload</button>
         <h2>Add Product</h2>
         <input type="text" id="productName" placeholder="Product Name">
         <input type="url" id="productImage" placeholder="Image URL">
-        <input type="number" id="productPrice" step="0.01" placeholder="Price">
+        <input type="number" id="productPrice" step="0.01" placeholder="Price in peso">
         <button id="addProductBtn">Add Product</button>
-        <span style="font-size:12px;padding:4px;text-align:center;"><strong>Note:</strong> Any misformed product (eg. Blank Image) will be deleted. You may follow this <a href="guide.html" target="_blank" style="color:#FFF;text-decoration:none;">guide</a> to avoid this from happening, thank you.</span>
+        <span style="font-size:12px;padding:4px;text-align:center;"><strong>Note:</strong> Any misformed product (eg. Blank Image) will be deleted. You may follow this <a href="javascript:void(0)" id="showGuide" style="color:#FFF;text-decoration:none;">guide</a> to avoid this from happening, thank you.</span>
     </div>
+    
     <button class="showMPF">+</button>
+    
+    <div class="iframe-container">
+    <iframe src="guide.html" height="90%" width="100%" frameborder="0"></iframe>
+    <center>
+    <button id="closeGuide" style="padding:10px;width:90%;margin:auto;margin-top:10px;border-radius:5px;">Close Guide</button>
+    </center>
+    </div>
     
     <div class="menu">
     <div class="product-container">
@@ -519,6 +593,28 @@
     
     <p id="message"></p>
     
+    <footer>
+        
+        <div class="about" id="about">
+        <h2>About Us</h2>
+        <img src="logo.jpg" style="height:200px;width:245px;margin:auto;">
+        <p>Welcome to Luto ni Fred, your home for authentic Filipino cuisine! We are passionate about sharing the rich flavors, vibrant culture, and heartwarming traditions of the Philippines with food enthusiasts worldwide. Our team of dedicated food lovers and chefs bring you a collection of traditional recipes and innovative creations that showcase the best of Filipino cooking.</p>
+        </div>
+       
+        <div class="contact" id="contact">
+            <h2>Contact Us</h2>
+            <form>
+                <label for="Email">Email:</label>
+                <input type="email" name="Email" placeholder="youremail@gmail.com" required="required">
+                <label for="Message">Message:</label>
+                <textarea name="Message" placeholder="Message"  rows="10" required="required"></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+        
+        <h3>© 2023 Luto ni Fred</h3>
+        
+    </footer>
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script>
@@ -564,6 +660,14 @@
     let closeOrderHistory = document.getElementById('closeOrderHistory');
     closeOrderHistory.addEventListener('click', () => {
         document.querySelector('.order-history-container').style.display = 'none';
+    });
+    let showGuide = document.getElementById('showGuide');
+    showGuide.addEventListener('click', () => {
+        document.querySelector('.iframe-container').style.display = 'block';
+    });
+    let closeGuide = document.getElementById('closeGuide');
+    closeGuide.addEventListener('click', () => {
+        document.querySelector('.iframe-container').style.display = 'none';
     });
 // simple dom end
         // Initialize Firebase
