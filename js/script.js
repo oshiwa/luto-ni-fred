@@ -50,6 +50,8 @@
         document.querySelector('.iframe-container').style.display = 'none';
     });
 // simple dom end
+
+
         // Initialize Firebase
         const firebaseConfig = {
             // Your Firebase configuration
@@ -64,21 +66,96 @@
         };
         firebase.initializeApp(firebaseConfig);
         let cart = [];
+        let auth;
         document.addEventListener('DOMContentLoaded', () => {
+            /*
             const auth = firebase.auth();
             const firestore = firebase.firestore();
-            
+            */
+            auth = firebase.auth();
+            const firestore = firebase.firestore();
             // Check if a user is logged in
             auth.onAuthStateChanged(user => {
                 if (user) {
+                    const userEmail = user.email;
                     showAccount.addEventListener('click', () => {
         if (userProfile.style.display == 'grid'){
             userProfile.style.display = 'none';
         }else{
             userProfile.style.display = 'grid';
         }
+    
+    const orderHistoryContainer = document.getElementById('orderHistoryContainer');
+    if (userEmail === 'adminfred@gmail.com') {
+        
+        document.getElementById('change').textContent = 'Customer Orders';
+        document.getElementById('changeTitle').textContent = 'Customer Orders'
+        document.querySelector('.change').textContent = 'Close Customer Orders'
+        
+      orderHistoryContainer.style.display = 'grid';
+      function renderOrderHistory(emailAddress) {
+  orderItems.innerHTML = '';
+
+  firestore
+    .collection('orderHistory')
+    .orderBy('timestamp', 'desc')
+    .get()
+    .then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        const orderData = doc.data(); // Retrieve the order data
+        const order = orderData.order; // Get the 'order' property from the data
+        const userEmail = orderData.userEmail; // Get the 'userEmail' property from the data
+
+        // Filter out your own orders
+        if (userEmail !== emailAddress) {
+          console.log('Order:', order); // Log the order data to check if it's defined correctly
+          console.log('User Email:', userEmail);
+          console.log('Order ID:', doc.id);
+          console.log('Timestamp:', new Date(orderData.timestamp).toLocaleString());
+
+          const orderItem = document.createElement('li');
+          orderItem.innerHTML = `
+            <span><strong>User ID:</strong> ${userEmail} </span>
+            <span><strong>Address:</strong> ${orderData.address} </span>
+            <span><strong>Number:</strong> ${orderData.number}</span>
+            <span><strong>Order ID:</strong> ${doc.id}</span>
+            <span><strong>Date:</strong> ${new Date(orderData.timestamp).toLocaleString()}</span>
+            ${order
+              .map(item => `
+                <div class="order-details">
+                  <span><strong>Item: </strong>${item.name}</span>
+                  <span><strong>Quantity: </strong> ${item.quantity} </span>
+                </div>
+              `)
+              .join('')}
+          `;
+
+          orderItems.appendChild(orderItem);
+        }
+      });
+    })
+    .catch(error => {
+      console.log(error.message);
     });
-                    document.getElementById('username').textContent = user.email;
+}
+    } 
+    else {
+      //orderHistoryContainer.style.display = 'none';
+      showMPF.style.display = 'none';
+    }
+    if (userEmail === 'adminfred@gmail.com') {
+      renderOrderHistory();
+    }
+/*
+    else {
+    // User is not logged in, hide the order history container
+    const orderHistoryContainer = document.getElementById('orderHistoryContainer');
+    orderHistoryContainer.style.display = 'none';
+  }
+*/
+    });
+    // remove let of error
+                   document.getElementById('username').textContent = user.email;
                     document.getElementById('userProfile').style.display = 'none';
                     document.getElementById('myCart').style.display = 'grid';
                     document.getElementById('myOrderHistory').style.display = 'grid';
@@ -134,7 +211,7 @@
                         registrationForm.reset();
                                             document.getElementById('message').style.display = 'grid';
                         document.getElementById('message').textContent = 'Registered successfully!';
-                            
+                    window.location.reload();
                     setTimeout(() => {
                         document.getElementById('message').style.display = 'none';
                             }, 2500);
@@ -350,6 +427,8 @@
             // Handle placing an order
             const placeOrderBtn = document.getElementById('placeOrderBtn');
             const orderItems = document.getElementById('orderItems');
+            const addressInput = document.getElementById('addressInput');
+            const numberInput = document.getElementById('numberInput');
             placeOrderBtn.addEventListener('click', () => {
                 if (!auth.currentUser) {
                                         document.getElementById('message').style.display = 'grid';
@@ -370,17 +449,31 @@
                             }, 2500);
                     return;
                 }
-                const order = cart.map(item => ({
-                    name: item.product.name,
-                    quantity: item.quantity
-                }));
+const userEmail = auth.currentUser.email; // Retrieve the user's email
+console.log("User Email:", userEmail);
+const address = addressInput.value;
+console.log("Address:", address);
+const number = numberInput.value;
+console.log("Number:", number);
 
+    const order = cart.map(item => ({
+        name: item.product.name,
+        address: address,
+        number: number,
+        userEmail: userEmail, // Store the user's email in the order
+        quantity: item.quantity
+    }));
+    console.log("Order:", order);
                 // Add the order to the order history collection in Firestore
                 const timestamp = new Date().getTime();
                 firestore.collection('orderHistory').add({
                     userId: auth.currentUser.uid,
+                    // add email
+                    userEmail: userEmail,
+                    address: address,
+                    number: number,
                     order: order,
-                    timestamp: timestamp
+                    timestamp: timestamp,
                 })
                 .then(() => {
                     // Clear the cart after placing the order
@@ -405,43 +498,52 @@
                     
                 });
             });
+            
+function renderOrderHistory() {
+  orderItems.innerHTML = '';
 
-            // Render order history
-            function renderOrderHistory() {
-                orderItems.innerHTML = '';
+  firestore
+    .collection('orderHistory')
+    .where('userId', '==', auth.currentUser.uid)
+    .orderBy('timestamp', 'desc')
+    .get()
+    .then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        const orderData = doc.data(); // Retrieve the order data
+        const order = orderData.order; // Get the 'order' property from the data
 
-                firestore.collection('orderHistory')
-                .where('userId',
-                    '==',
-                    auth.currentUser.uid)
-                .orderBy('timestamp',
-                    'desc')
-                .get()
-                .then(querySnapshot => {
-                    querySnapshot.forEach(doc => {
-                        const order = doc.data();
-                        const orderItem = document.createElement('li');
-                        orderItem.innerHTML = `
-                        <span><strong>Order ID:</strong> ${doc.id}</span>
-                        <span><strong>Date:</strong> ${new Date(order.timestamp).toLocaleString()}</span>
-                        ${order.order
-                        .map(item => `
-                        <div class="order-details">
-                        <span><strong>Item: </strong>${item.name}</span><span><strong>Quantity: </strong> ${item.quantity} </span>
-                        </div>
-                        `)
-                        .join('')}
-                        
+        console.log('Order:', order); // Log the order data to check if it's defined correctly
+        console.log('User Email:', orderData.userEmail);
+        console.log('Order ID:', doc.id);
+        console.log('Timestamp:', new Date(orderData.timestamp).toLocaleString());
 
-                        `;
-                        orderItems.appendChild(orderItem);
-                    });
-                })
-                .catch(error => {
-                    console.log(error.message);
-                });
-            }
+        const orderItem = document.createElement('li');
+        orderItem.innerHTML = `
+          <span><strong>User ID:</strong> ${orderData.userEmail} </span>
+          <span><strong>Order ID:</strong> ${doc.id}</span>
+          <span><strong>Date:</strong> ${new Date(orderData.timestamp).toLocaleString()}</span>
+          <span><strong>Address:</strong> ${orderData.address} </span>
+          <span><strong>Number:</strong> ${orderData.number}</span>
+          ${order
+            .map(item => `
+              <div class="order-details">
+                <span><strong>Item: </strong>${item.name}</span>
+                <span><strong>Quantity: </strong> ${item.quantity} </span>
+              </div>
+            `)
+            .join('')}
+        `;
 
+        orderItems.appendChild(orderItem);
+      });
+    })
+    .catch(error => {
+      console.log(error.message);
+    });
+}
+
+            
+            
             // Calculate the total price of the order
             function calculateTotalPrice(order) {
                 let totalPrice = 0;
