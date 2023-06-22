@@ -27,7 +27,7 @@
         <button id="myCart"><span class="icon"><i class="fa-solid fa-cart-shopping"></i></span>My Cart</button>
         </a>
         <a href="#orderHistoryContainer">
-        <button id="myOrderHistory"><span class="icon"><i class="fa-solid fa-rectangle-list"></i></span>Order History</button>
+        <button id="myOrderHistory"><span class="icon"><i class="fa-solid fa-rectangle-list"></i></span><span id="change">Order History</span></button>
         </a>
         <hr style="margin-top:10px;margin-bottom:10px;background:white;">
         <div class="accountSettings">
@@ -92,7 +92,11 @@
         <h2>Cart</h2>
         <ul id="cartItems"></ul>
         <div id="cartSubtotal"></div>
-        <button id="placeOrderBtn">Place Order</button>
+        <form>
+        <input type="text" placeholder="Address" required="required" id="addressInput">
+        <input type="tel" placeholder="Number" required="required" id="numberInput">
+        <button type="submit" id="placeOrderBtn">Place Order</button>
+        </form>
         <hr style="margin-top:10px;margin-bottom:10px;background:black;">
         <button id="closeCart">Close Cart</button>
     </div>
@@ -100,8 +104,8 @@
     
     <div class="order-history-container">
     <div class="product-container" id="orderHistoryContainer">
-        <h2>Order History</h2>
-        <button id="closeOrderHistory">Close Order History</button>
+        <h2 id="changeTitle">Order History</h2>
+        <button id="closeOrderHistory" class="change">Close Order History</button>
     <div id="orderHistory">
         <ul id="orderItems"></ul>
     </div>
