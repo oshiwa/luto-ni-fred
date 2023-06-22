@@ -1,0 +1,483 @@
+
+    @import url("https://fonts.googleapis.com/css?family=Kanit:400");
+        *{
+            font-family: Kanit;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        body{
+            background: #FEF9F6;
+        }
+        img {
+            width: 100%;
+            height: auto;
+            margin: auto;
+        }
+        a{
+            cursor: pointer;
+            text-decoration: none;
+        }
+        button{
+            background: #E7CBCB;
+            border: 2px solid  #99627A!important;
+            cursor: pointer;
+            color: #000;
+            border: none;
+            outline: none;
+        }
+        header{
+            background: #C88EA7;
+            box-shadow: 1px 1px 3px 1px silver;
+        }
+        .logo{
+            display: grid;
+            margin: auto;
+            border-bottom: 4px solid #99627A;
+            padding: 24px;
+        }
+        .logo img{
+            height: 200px;
+            width: 275px;
+        }
+        nav{
+            border-bottom: 4px solid #99627A;
+            margin-bottom: 14px;
+            display: grid;
+            width: 100%;
+        }
+        nav ul{
+            display: flex;
+            width: 100%;
+        }
+        nav ul li{
+            display: flex;
+            width: 100%;
+            text-align: center;
+        }
+        nav ul li a{
+            padding: 14px;
+            width: 100%;
+            text-decoration: none;
+            color: #000;
+        }
+        #userProfile, .moreProductsForm{
+            display: none;
+            gap: 4px;
+        }
+        #userProfile{
+            padding: 14px;
+            background: #C88EA7;
+            box-shadow: 1px 1px 3px 1px #99627A;
+            border-radius: 5px;
+            position: fixed;
+            transform: translate(-50%, -50%);
+            width: 75%;
+            left: 50%;
+            top: 50%;
+            animation-name: fade;
+            animation-direction: ease-in;
+            animation-duration: .75s;
+        }
+        #userProfile button{
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .accountSettings{
+            display: grid;
+            gap: 4px;
+        }
+        .product-container{
+            padding: 14px;
+            border-radius: 5px;
+            box-shadow: 1px 1px 3px 1px silver;
+        }
+        .product-container h2{
+            text-align: center;
+            background: #C88EA7;
+            padding: 18px;
+            border-radius: 5px;
+            border: 2px solid #99627A;
+            text-transform: uppercase;
+        }
+        #productListAlmusal{
+            display: grid;
+            grid-template-columns: 50% 50%;
+            justify-content: space-evenly;
+            gap: 8px;
+            padding: 8px;
+        }
+        #productListLutongUlam{
+            display: grid;
+            grid-template-columns: 50% 50%;
+            justify-content: space-evenly;
+            gap: 8px;
+            padding: 8px;
+        }
+        #productListPanghimagas{
+            display: grid;
+            grid-template-columns: 50% 50%;
+            justify-content: space-evenly;
+            gap: 8px;
+            padding: 8px;
+        }
+        #moreProducts{
+            display: grid;
+            grid-template-columns: 50% 50%;
+            justify-content: space-evenly;
+            gap: 8px;
+            padding: 8px;
+        }
+        #cart{
+            padding: 14px;
+            border-radius: 5px;
+            box-shadow: 1px 1px 3px 1px silver;
+        }
+        #cart h2{
+            text-align: center;
+            background: #C88EA7;
+            padding: 18px;
+            border-radius: 5px;
+            border: 2px solid #99627A;
+            text-transform: uppercase;
+        }
+        #cartItems{
+            display: grid;
+            grid-template-columns: 50% 50%;
+            justify-content: space-evenly;
+            padding: 8px;
+            gap: 8px;
+        }
+        #orderItems{
+            display: grid;
+            padding: 8px;
+            gap: 8px;
+        }
+        #orderHistory ul li{
+            display: grid;
+            row-gap: 4px;
+            background: #C88EA7;
+            border: 2px solid #99627A;
+            max-height: 175px;
+            overflow-y: scroll;
+            text-align: center;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        .product{
+            color: #000;
+            background: #C88EA7;
+            border-radius: 5px;
+            border: 2px solid #99627A;
+            text-align: center;
+            justify-content: center;
+            padding: 14px;
+        }
+        .product h3{
+            font-weight: bolder;
+            padding: 14px 0px 14px 0px;
+        }
+        .product .quantity{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0px 14px 0px;
+            font-weight: bolder;
+        }
+        .product .increment-btn, .product .decrement-btn{
+            padding: 6px 18px 6px 18px;
+            font-weight: bold;
+            border-radius: 5px;
+            border: 2px solid #99627A;
+        }
+        .addToCartBtn, .remove-btn, #placeOrderBtn{
+            display: grid;
+            font-weight: bold;
+            border: 2px solid #99627A;
+            border-radius: 5px;
+            width: 100%;
+            padding: 10px;
+        }
+        .product-image{
+            width: 135px;
+            height: 135px;
+            overflow: hidden;
+            border-radius: 50%;
+            border: 2px solid  #99627A;
+            display: block;
+            margin: auto;
+        }
+        .product-image img{
+            width: 100%;
+            height: 100%;
+            margin: auto;
+        }
+        .showMPF{
+            position: fixed;
+            border-radius: 50%;
+            transform: translate(-50% -50%);
+            height: 45px;
+            width: 45px;
+            right: 5%;
+            bottom: 5%;
+            font-size: 24px;
+        }
+        #cartSubtotal{
+            text-align: center;
+            font-weight: bold;
+            text-decoration: underline;
+            padding: 14px;
+        }
+        .order-details{
+            display: grid;
+            grid-template-columns: 50% 50%;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            text-align: center;
+            gap: 4px;
+        }
+        .moreProductsForm{
+            padding: 24px;
+            position: fixed;
+            transform: translate(-50%, -50%);
+            background: #C88EA7;
+            box-shadow: 1px 1px 3px 1px #99627A;
+            border-radius: 5px;
+            gap: 4px;
+            width: 75%;
+            top: 50%;
+            left: 50%;
+            animation-name: fade;
+            animation-direction: ease-in;
+            animation-duration: .75s;
+        }
+        @keyframes fade{
+            0%{
+                margin-top: 300px;
+            }
+            100%{
+                margin: 0px;
+            }
+        }
+        .moreProductsForm h2{
+            text-align: center;
+            padding: 0px 0px 10px 0px;
+        }
+        .moreProductsForm input{
+            border: none;
+            outline: none;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .moreProductsForm button{
+            padding: 10px;
+            border-radius: 5px;
+        }
+        #accountForm{
+            display: none;
+            padding: 24px;
+            position: fixed;
+            transform: translate(-50%, -50%);
+            background: #C88EA7;
+            box-shadow: 1px 1px 3px 1px #99627A;
+            border-radius: 5px;
+            gap: 4px;
+            width: 75%;
+            top: 50%;
+            left: 50%;
+            animation-name: fade;
+            animation-direction: ease-in;
+            animation-duration: .75s;
+            gap: 8px;
+        }
+        #accountForm h2{
+            padding-bottom: 12px;
+            text-align: center;
+        }
+        #accountForm form{
+            display: grid;
+            gap: 4px;
+        }
+        #accountForm input, #accountForm button{
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+        }
+        #message{
+            position: fixed;
+            overflow: hidden;
+            transform: translate(-50%, -50%);
+            animation-name: fade;
+            animation-direction: ease-in;
+            animation-duration: .75s;
+            top: 85%;
+            left: 50%;
+            display: none;
+            background: #333;
+            border-radius: 5px;
+            text-align: center;
+            overflow: hidden;
+            padding: 8px;
+            width: 65%;
+            color: #fff;
+        }
+        #closeForm{
+            border: 2px solid #FFF!important;
+            background: inherit;
+            margin-top: 14px;
+            color: #FFF;
+        }
+        .menu{
+            display: grid;
+            gap: 24px;
+        }
+        .cart-container{
+            position: fixed;
+            transform: translate(-50%, -50%);
+            box-shadow: 1px 1px 3px 1px silver;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100vh;
+            overflow-y: scroll;
+            background: #FFF;
+            display: none;animation-name: fade;
+            animation-direction: ease-in;
+            animation-duration: .75s;
+        }
+        .order-history-container{
+            position: fixed;
+            transform: translate(-50%, -50%);
+            box-shadow: 1px 1px 3px 1px silver;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100vh;
+            overflow-y: scroll;
+            background: #FFF;
+            display: none;
+            animation-name: fade;
+            animation-direction: ease-in;
+            animation-duration: .75s;
+        }
+        .iframe-container{
+            position: fixed;
+            transform: translate(-50%, -50%);
+            box-shadow: 1px 1px 3px 1px silver;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100vh;
+            overflow-y: scroll;
+            background: #FFF;
+            display: none;
+            animation-name: fade;
+            animation-direction: ease-in;
+            animation-duration: .75s;
+            padding: 14px;
+        }
+        #closeCart{
+            display: grid;
+            padding: 10px;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+        #closeOrderHistory{
+            display: grid;
+            padding: 10px;
+            font-weight: bold;
+            border-radius: 5px;
+            margin: auto;
+            margin-top: 24px;
+            margin-bottom: 14px;
+            width: 95%;
+        }
+        footer{
+            background: #C88EA7;
+            padding: 24px;
+            box-shadow: 1px 1px 3px 1px silver;
+            margin-top: 48px;
+            border-top: 4px solid #99627A;
+        }
+        .about{
+            border: 2px solid #99627A;
+            border-radius: 5px;
+            padding: 14px;
+            margin-bottom: 24px;
+            background: #C88EA7;
+        }
+        .about h2{
+            text-decoration: underline;
+            text-align: center;
+            padding: 0px 14px 14px 14px;
+        }
+        .about img{
+            display: grid;
+            margin: auto;
+        }
+        .about p{
+            text-align: center;
+            padding: 14px 14px 0px 14px;
+        }
+        .contact{
+            border: 2px solid #99627A;
+            background: #C88EA7;
+            border-radius: 5px;
+            padding: 14px;
+        }
+        .contact h2{
+            text-align: center;
+            padding: 0px 14px 14px 14px;
+            text-decoration: underline;
+        }
+        .contact form{
+            display: grid;
+            gap: 4px;
+        }
+        .contact form input, .contact form textarea, .contact form button{
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+        }
+        footer h3{
+            padding: 14px;
+            text-align: center;
+        }
+        .icon{
+            margin: 4px;
+        }
+        @media screen and (min-width:720px){
+            #orderHistory ul{
+                grid-template-columns: 33.33% 33.33% 33.33%;
+                justify-content: space-evenly;
+                padding: 8px;
+            }
+            .desk-two-col{
+                display: grid;
+                grid-template-columns: 50% 50%;
+                justify-content: space-evenly;
+            }
+            #productListPanghimagas, #productListLutongUlam, #productListAlmusal, #moreProducts{
+                grid-template-columns: 33.33% 33.33% 33.33%;
+                justify-content: space-evenly;
+                padding: 14px;
+            }
+            .product-image{
+                height: 175px;
+                width: 175px;
+            }
+            #cartItems{
+                grid-template-columns: 33.33% 33.33% 33.33%;
+                justify-content: space-evenly;
+                padding: 14px;
+            }
+            nav ul li a:hover{
+                background: #E7CBCB;
+            }
+        }
