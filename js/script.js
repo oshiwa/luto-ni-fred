@@ -429,7 +429,8 @@
             const orderItems = document.getElementById('orderItems');
             const addressInput = document.getElementById('addressInput');
             const numberInput = document.getElementById('numberInput');
-            placeOrderBtn.addEventListener('click', () => {
+            placeOrderBtn.addEventListener('click', (e) => {
+                e.preventDefault();
                 if (!auth.currentUser) {
                                         document.getElementById('message').style.display = 'grid';
                         document.getElementById('message').textContent = 'Please register or login first!';
