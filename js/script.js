@@ -146,7 +146,7 @@
       showMPF.style.display = 'none';
     }
     if (userEmail === 'adminfred@gmail.com') {
-      renderOrderHistory(userEmail);
+      renderOrderHistory();
     }
 /*
     else {
