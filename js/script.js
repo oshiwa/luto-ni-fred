@@ -425,39 +425,54 @@
                 updateCartData();
                 renderCart();
             }
+// Handle placing an order
+const placeOrderBtn = document.getElementById('placeOrderBtn');
+const orderItems = document.getElementById('orderItems');
+const addressInput = document.getElementById('addressInput');
+const numberInput = document.getElementById('numberInput');
 
-            // Handle placing an order
-            const placeOrderBtn = document.getElementById('placeOrderBtn');
-            const orderItems = document.getElementById('orderItems');
-            const addressInput = document.getElementById('addressInput');
-            const numberInput = document.getElementById('numberInput');
-            placeOrderBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                if (!auth.currentUser) {
-                                        document.getElementById('message').style.display = 'grid';
-                        document.getElementById('message').textContent = 'Please register or login first!';
-                            
-                    setTimeout(() => {
-                        document.getElementById('message').style.display = 'none';
-                            }, 2500);
-                    return;
-                }
+placeOrderBtn.addEventListener('click', (e) => {
+    e.preventDefault();
 
-                if (cart.length === 0) {
-                                        document.getElementById('message').style.display = 'grid';
-                        document.getElementById('message').textContent = 'Please add product(s) to the cart first!';
-                            
-                    setTimeout(() => {
-                        document.getElementById('message').style.display = 'none';
-                            }, 2500);
-                    return;
-                }
-const userEmail = auth.currentUser.email; // Retrieve the user's email
-console.log("User Email:", userEmail);
-const address = addressInput.value;
-console.log("Address:", address);
-const number = numberInput.value;
-console.log("Number:", number);
+    // Get the input values
+    const address = addressInput.value;
+    const number = numberInput.value;
+
+    // Validate the form
+    if (address === '' || number === '') {
+        document.getElementById('message').style.display = 'grid';
+        document.getElementById('message').textContent = 'Please fill in all the fields';
+
+        setTimeout(() => {
+            document.getElementById('message').style.display = 'none';
+        }, 2500);
+
+        return;
+    }
+
+    if (!auth.currentUser) {
+        document.getElementById('message').style.display = 'grid';
+        document.getElementById('message').textContent = 'Please register or login first!';
+
+        setTimeout(() => {
+            document.getElementById('message').style.display = 'none';
+        }, 2500);
+
+        return;
+    }
+
+    if (cart.length === 0) {
+        document.getElementById('message').style.display = 'grid';
+        document.getElementById('message').textContent = 'Please add product(s) to the cart first!';
+
+        setTimeout(() => {
+            document.getElementById('message').style.display = 'none';
+        }, 2500);
+
+        return;
+    }
+
+    const userEmail = auth.currentUser.email; // Retrieve the user's email
 
     const order = cart.map(item => ({
         name: item.product.name,
@@ -466,41 +481,45 @@ console.log("Number:", number);
         userEmail: userEmail, // Store the user's email in the order
         quantity: item.quantity
     }));
-    console.log("Order:", order);
-                // Add the order to the order history collection in Firestore
-                const timestamp = new Date().getTime();
-                firestore.collection('orderHistory').add({
-                    userId: auth.currentUser.uid,
-                    // add email
-                    userEmail: userEmail,
-                    address: address,
-                    number: number,
-                    order: order,
-                    timestamp: timestamp,
-                })
-                .then(() => {
-                    // Clear the cart after placing the order
-                    cart = [];
-                    updateCartData();
-                    renderCart();
-                    renderOrderHistory(); // Add this line to update the order history
-                    document.getElementById('message').style.display = 'grid';
-                        document.getElementById('message').textContent = 'Product has been placed!';
-                            
-                    setTimeout(() => {
-                        document.getElementById('message').style.display = 'none';
-                            }, 2500);
-                })
-                .catch(error => {
-                                        document.getElementById('message').style.display = 'grid';
-                        document.getElementById('message').textContent = (error.message);
-                            
-                    setTimeout(() => {
-                        document.getElementById('message').style.display = 'none';
-                            }, 2500);
-                    
-                });
-            });
+
+    // Add the order to the order history collection in Firestore
+    const timestamp = new Date().getTime();
+    firestore.collection('orderHistory').add({
+        userId: auth.currentUser.uid,
+        userEmail: userEmail,
+        address: address,
+        number: number,
+        order: order,
+        timestamp: timestamp,
+    })
+    .then(() => {
+        // Clear the cart after placing the order
+        cart = [];
+        updateCartData();
+        renderCart();
+        renderOrderHistory(); // Add this line to update the order history
+        // Clear the form fields
+        addressInput.value = '';
+        numberInput.value = '';
+
+
+        document.getElementById('message').style.display = 'grid';
+        document.getElementById('message').textContent = 'Product has been placed!';
+
+        setTimeout(() => {
+            document.getElementById('message').style.display = 'none';
+        }, 2500);
+    })
+    .catch(error => {
+        document.getElementById('message').style.display = 'grid';
+        document.getElementById('message').textContent = error.message;
+
+        setTimeout(() => {
+            document.getElementById('message').style.display = 'none';
+        }, 2500);
+    });
+});
+
             
 function renderOrderHistory() {
   orderItems.innerHTML = '';
