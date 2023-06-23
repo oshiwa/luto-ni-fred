@@ -85,14 +85,16 @@
             userProfile.style.display = 'grid';
         }
     
-    const orderHistoryContainer = document.getElementById('orderHistoryContainer');
     if (userEmail === 'adminfred@gmail.com') {
         
         document.getElementById('change').textContent = 'Customer Orders';
         document.getElementById('changeTitle').textContent = 'Customer Orders'
         document.querySelector('.change').textContent = 'Close Customer Orders'
+        document.querySelector('.admin').textContent = 'Admin'
         
+      const orderHistoryContainer = document.getElementById('orderHistoryContainer');
       orderHistoryContainer.style.display = 'grid';
+      
       function renderOrderHistory(emailAddress) {
   orderItems.innerHTML = '';
 
@@ -144,7 +146,7 @@
       showMPF.style.display = 'none';
     }
     if (userEmail === 'adminfred@gmail.com') {
-      renderOrderHistory();
+      renderOrderHistory(userEmail);
     }
 /*
     else {
@@ -521,10 +523,10 @@ function renderOrderHistory() {
         const orderItem = document.createElement('li');
         orderItem.innerHTML = `
           <span><strong>User ID:</strong> ${orderData.userEmail} </span>
-          <span><strong>Order ID:</strong> ${doc.id}</span>
-          <span><strong>Date:</strong> ${new Date(orderData.timestamp).toLocaleString()}</span>
           <span><strong>Address:</strong> ${orderData.address} </span>
           <span><strong>Number:</strong> ${orderData.number}</span>
+          <span><strong>Order ID:</strong> ${doc.id}</span>
+          <span><strong>Date:</strong> ${new Date(orderData.timestamp).toLocaleString()}</span>
           ${order
             .map(item => `
               <div class="order-details">
