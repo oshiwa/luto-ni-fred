@@ -92,6 +92,12 @@
         document.querySelector('.change').textContent = 'Close Customer Orders'
         document.querySelector('.admin').textContent = 'Admin'
         
+        let hideThis = document.querySelectorAll('.hideThis');
+        
+        for (let i = 0; i < hideThis.length; i++){
+            hideThis[i].style.display = 'none';
+        }
+        
       const orderHistoryContainer = document.getElementById('orderHistoryContainer');
       orderHistoryContainer.style.display = 'grid';
       
